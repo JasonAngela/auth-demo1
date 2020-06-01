@@ -1,0 +1,6 @@
+server:
+  port: 8888
+
+redis:
+  redisson:
+    config: classpath:redisson.yml
