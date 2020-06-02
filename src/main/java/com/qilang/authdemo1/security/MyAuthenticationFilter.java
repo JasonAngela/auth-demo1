@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
@@ -79,5 +81,18 @@ public class MyAuthenticationFilter extends AbstractAuthenticationProcessingFilt
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
 				username, passwordEncoder.encode(password), user.getAuthorities() );
 		return authRequest;
+	}
+
+
+	@Override
+	@Autowired
+	public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler successHandler) {
+		super.setAuthenticationSuccessHandler(successHandler);
+	}
+
+	@Override
+	@Autowired
+	public void setAuthenticationFailureHandler(AuthenticationFailureHandler failureHandler) {
+		super.setAuthenticationFailureHandler(failureHandler);
 	}
 }

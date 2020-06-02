@@ -2,10 +2,12 @@ package com.qilang.authdemo1.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -14,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Autowired
@@ -43,10 +46,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 						"/doc.html",
 						"/swagger-ui.html",
 						"/swagger-resources/**",
-						"/captcha.jpg").permitAll()
+						"/captcha.jpg","/login").permitAll()
 				.and()
 				.authorizeRequests()
 				//配置所有访问控制，必须认证过后才可以访问
 				.antMatchers("/**").authenticated();
+
+
 	}
 }
